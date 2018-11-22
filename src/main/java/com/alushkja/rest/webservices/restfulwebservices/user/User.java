@@ -10,6 +10,11 @@ public class User {
 	
 	private Date birthDate;
 	
+	//used to make POST request
+	protected User() {
+		
+	}
+	
 	public User(Integer id, String name, Date birthDate) {
 		super();
 		this.id = id;
