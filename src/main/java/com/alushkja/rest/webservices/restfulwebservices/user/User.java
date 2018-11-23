@@ -4,14 +4,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
 import org.hibernate.mapping.Array;
 
 public class User {
 
 	private Integer id;
 
+	@Size(min=2, message="Name should have atleast 2 characters")
 	private String name;
 
+	@Past
 	private Date birthDate;
 
 	private List<Post> posts = new ArrayList<>();
