@@ -11,10 +11,17 @@ public class UserDaoService {
 
 	private static List<User> users = new ArrayList<>();
 	
+	private static List<Post> userPosts = new ArrayList<>();
+	
+	private static PostDaoService postService;
+	
 	private static int usersCount = 3;
 	
 	static {
+//		userPosts.add(postService.savePost(new Post(1,"This is 1st")));
+//		userPosts.add(postService.savePost(new Post(2,"This is 2st")));
 		users.add(new User(1, "Adam", new Date()));
+//		userPosts.add(postService.savePost(new Post(1,"This is 1st")));
 		users.add(new User(2, "Eve", new Date()));
 		users.add(new User(3, "Jack", new Date()));
 	}

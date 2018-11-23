@@ -1,4 +1,4 @@
-package com.alushkja.rest.webservices.restfulwebservices.user;
+package com.alushkja.rest.webservices.restfulwebservices.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

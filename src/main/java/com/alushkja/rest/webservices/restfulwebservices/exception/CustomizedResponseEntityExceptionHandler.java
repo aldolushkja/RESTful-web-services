@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.alushkja.rest.webservices.restfulwebservices.user.UserNotFoundException;
+import com.alushkja.rest.webservices.restfulwebservices.exception.CannotCreateUserException;
+import com.alushkja.rest.webservices.restfulwebservices.exception.UserNotFoundException;
+import com.alushkja.rest.webservices.restfulwebservices.exception.UsersNotFoundException;
 
 //
 @ControllerAdvice
@@ -31,6 +33,30 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
 			ex.getMessage(), request.getDescription(false));
 	return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(UsersNotFoundException.class)
+	public final ResponseEntity<Object> handleUsersNotFoundException(UsersNotFoundException ex, WebRequest request) 
+			 {
+	ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+			ex.getMessage(), request.getDescription(false));
+	return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(CannotCreateUserException.class)
+	public final ResponseEntity<Object> handleCreateUserException(CannotCreateUserException ex, WebRequest request) 
+			 {
+	ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+			ex.getMessage(), request.getDescription(false));
+	return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(ConflictCreateUserException.class)
+	public final ResponseEntity<Object> handleCreateUserException(ConflictCreateUserException ex, WebRequest request) 
+			 {
+	ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+			ex.getMessage(), request.getDescription(false));
+	return new ResponseEntity(exceptionResponse, HttpStatus.CONFLICT);
 	}
 
 }

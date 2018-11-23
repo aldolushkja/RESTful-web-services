@@ -1,25 +1,39 @@
 package com.alushkja.rest.webservices.restfulwebservices.user;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import org.hibernate.mapping.Array;
 
 public class User {
 
 	private Integer id;
-	
+
 	private String name;
-	
+
 	private Date birthDate;
-	
-	//used to make POST request
+
+	private List<Post> posts = new ArrayList<>();
+
+	// used to make POST request
 	protected User() {
-		
+
 	}
-	
+
 	public User(Integer id, String name, Date birthDate) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.birthDate = birthDate;
+	}
+
+	public User(Integer id, String name, Date birthDate, List<Post> posts) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.birthDate = birthDate;
+		this.posts = posts;
 	}
 
 	public Integer getId() {
@@ -46,12 +60,17 @@ public class User {
 		this.birthDate = birthDate;
 	}
 
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("User [id=%s, name=%s, birthDate=%s]", id, name, birthDate);
 	}
 
-
-	
-	
 }
