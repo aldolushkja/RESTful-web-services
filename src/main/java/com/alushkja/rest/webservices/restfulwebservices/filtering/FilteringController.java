@@ -15,19 +15,39 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 @RestController
 public class FilteringController {
 
-	// dynamic filtering
-	// field1, field2
-	@GetMapping("/filtering")
-	public MappingJacksonValue retrieveSomeBean() {
-		SomeBean someBean = new SomeBean("value1", "value2", "value3");
-		// dynamic filtering
-		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("field1", "field2");
+	private MappingJacksonValue filtering(SomeBean someBean, SimpleBeanPropertyFilter filter) {
 
 		FilterProvider filters = new SimpleFilterProvider().addFilter("SomeBean Filter", filter);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(someBean);
 
 		mapping.setFilters(filters);
+
+		return mapping;
+	}
+
+	private MappingJacksonValue filteringList(List<SomeBean> someBean, SimpleBeanPropertyFilter filter) {
+
+		FilterProvider filters = new SimpleFilterProvider().addFilter("SomeBean Filter", filter);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(someBean);
+
+		mapping.setFilters(filters);
+
+		return mapping;
+	}
+
+	// dynamic filtering
+	// field1, field2
+	@GetMapping("/filtering")
+	public MappingJacksonValue retrieveSomeBean() {
+
+		SomeBean someBean = new SomeBean("value1", "value2", "value3");
+
+		// dynamic filtering
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("field1", "field2");
+
+		MappingJacksonValue mapping = filtering(someBean, filter);
 
 		return mapping;
 	}
@@ -41,11 +61,7 @@ public class FilteringController {
 
 		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("field2", "field3");
 
-		FilterProvider filters = new SimpleFilterProvider().addFilter("SomeBean Filter", filter);
-
-		MappingJacksonValue mapping = new MappingJacksonValue(list);
-
-		mapping.setFilters(filters);
+		MappingJacksonValue mapping = filteringList(list, filter);
 
 		return mapping;
 	}
