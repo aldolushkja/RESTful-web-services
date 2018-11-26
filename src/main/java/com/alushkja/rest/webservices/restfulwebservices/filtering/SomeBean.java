@@ -1,14 +1,19 @@
 package com.alushkja.rest.webservices.restfulwebservices.filtering;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(value= {"field1", "field2"})
+//static filtering 
+//@JsonIgnoreProperties(value = { "field1", "field2" })
+
+// dynamic filtering
+@JsonFilter("SomeBean Filter")
 public class SomeBean {
 
 	private String field1;
 	private String field2;
-	
+
 	// First approach
 //	@JsonIgnore
 	private String field3;
