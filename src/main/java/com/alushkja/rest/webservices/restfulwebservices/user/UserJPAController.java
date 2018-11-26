@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.alushkja.rest.webservices.restfulwebservices.exception.CannotCreateUserException;
 import com.alushkja.rest.webservices.restfulwebservices.exception.ConflictCreateUserException;
+import com.alushkja.rest.webservices.restfulwebservices.exception.PostNotFoundException;
 import com.alushkja.rest.webservices.restfulwebservices.exception.UserNotFoundException;
 import com.alushkja.rest.webservices.restfulwebservices.exception.UsersNotFoundException;
 
@@ -142,6 +143,24 @@ public class UserJPAController {
 
 		return ResponseEntity.created(location).build();
 
+	}
+	
+	// GET /users/{id}/posts
+	@GetMapping(path = "/jpa/users/{id}/posts/{post_id}")
+	public Post retrieveUserPost(@PathVariable int id , @PathVariable int post_id) {
+
+		Optional<User> user = userRepository.findById(id);
+		if (!user.isPresent()) {
+			throw new UserNotFoundException("id - " + id);
+		}
+	
+		Optional<Post> selectedPost = postRepository.findById(post_id);
+		
+		if(!selectedPost.isPresent()) {
+			throw new PostNotFoundException("post_id - " + post_id);
+		}
+		
+		return selectedPost.get();
 	}
 
 }
