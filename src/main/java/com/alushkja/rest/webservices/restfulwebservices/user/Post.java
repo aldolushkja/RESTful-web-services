@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Post {
 
@@ -17,6 +19,7 @@ public class Post {
 	
 	// the meaning of LAZY is : don't try to call User until Post use getUser
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonIgnore
 	private User user;
 
 	public Integer getId() {

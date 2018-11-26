@@ -28,7 +28,6 @@ import com.alushkja.rest.webservices.restfulwebservices.exception.UsersNotFoundE
 @RestController
 public class UserJPAController {
 
-
 	@Autowired
 	private UserRepository userRepository;
 
@@ -96,9 +95,8 @@ public class UserJPAController {
 				// 200 OK - CREATED
 				// /users/{id} savedUser.getId()
 
-				URI location = ServletUriComponentsBuilder
-						.fromCurrentRequest()
-						.path("/{id}")
+				// HATEOS (Hypermedia as the Engine of the Application State)
+				URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 						.buildAndExpand(savedUser.getId()).toUri();
 
 				return ResponseEntity.created(location).build();
@@ -109,6 +107,15 @@ public class UserJPAController {
 
 	}
 
-	// HATEOS (Hypermedia as the Engine of the Application State)
+	// GET /users/{id}/posts
+	@GetMapping(path = "/jpa/users/{id}/posts")
+	public List<Post> retrieveAllUsersPosts(@PathVariable int id) {
+
+		Optional<User> user = userRepository.findById(id);
+		if (!user.isPresent()) {
+			throw new UserNotFoundException("id - " + id);
+		}
+		return user.get().getPosts();
+	}
 
 }
