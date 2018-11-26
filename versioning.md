@@ -5,7 +5,7 @@
 	- Microsoft
 - Uri Versioning
 	- Twitter
-Parameter versioning
+ - Parameter versioning
 	- Amazon
 - Factors
 	- URI Pollution
