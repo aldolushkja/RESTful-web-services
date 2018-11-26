@@ -28,8 +28,6 @@ import com.alushkja.rest.webservices.restfulwebservices.exception.UsersNotFoundE
 @RestController
 public class UserJPAController {
 
-	@Autowired
-	private UserDaoService service;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -73,10 +71,7 @@ public class UserJPAController {
 	// retrieveUser(int id)
 	@DeleteMapping(path = "/jpa/users/{id}")
 	public void deleteUser(@PathVariable int id) {
-		User user = service.deleteById(id);
-		if (user == null) {
-			throw new UserNotFoundException("id - " + id);
-		}
+		userRepository.deleteById(id);
 
 	}
 
@@ -84,7 +79,7 @@ public class UserJPAController {
 	// output - CREATED & return the created URI
 	@PostMapping("/jpa/users")
 	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
-		List<User> users = service.findAll();
+		List<User> users = userRepository.findAll();
 
 		for (User buffUser : users) {
 
@@ -97,11 +92,13 @@ public class UserJPAController {
 				throw new ConflictCreateUserException(
 						String.format("id %s has requested multiple times", user.getId()));
 			} else {
-				User savedUser = service.save(user);
-				// CREATED
+				User savedUser = userRepository.save(user);
+				// 200 OK - CREATED
 				// /users/{id} savedUser.getId()
 
-				URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				URI location = ServletUriComponentsBuilder
+						.fromCurrentRequest()
+						.path("/{id}")
 						.buildAndExpand(savedUser.getId()).toUri();
 
 				return ResponseEntity.created(location).build();
